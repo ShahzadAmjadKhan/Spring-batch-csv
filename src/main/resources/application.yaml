@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: lscv
+  batch:
+    job:
+      enabled: false
