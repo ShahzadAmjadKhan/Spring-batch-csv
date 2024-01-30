@@ -39,8 +39,8 @@ public class LscsvBatchController {
     @GetMapping("/launch")
     public ResponseEntity<LscsvBatchService.JobInfo> launchLscsvTest(
             @RequestParam(name = "file") String file) {
-        file = file.replaceAll("\n", "").replaceAll("\r","").replaceAll("\\R","");
-        //file = SANITIZER.matcher(file).replaceAll("");
+        //file = file.replaceAll("\n", "").replaceAll("\r","").replaceAll("\\R","");
+        file = SANITIZER.matcher(file).replaceAll("");
         logger.info("file provided:" + file);
         return ResponseEntity.ok(service.lanchLscsv(file));
     }
