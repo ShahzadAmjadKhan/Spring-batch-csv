@@ -18,7 +18,7 @@ public class LscsvBatchController {
 
     private final LscsvBatchService service;
 
-    private static final Pattern SANITIZER = Pattern.compile("[\r\n\R]"); 
+    private static final Pattern SANITIZER = Pattern.compile("[\r\n\\R]"); 
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
