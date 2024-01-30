@@ -1,6 +1,5 @@
 package io.github.lscsv.batch;
 
-import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +38,7 @@ public class LscsvBatchController {
     @GetMapping("/launch")
     public ResponseEntity<LscsvBatchService.JobInfo> launchLscsvTest(
             @RequestParam(name = "file") String file) {
-        //file = file.replaceAll("\n", "").replaceAll("\r","").replaceAll("\\R","");
-        file = SANITIZER.matcher(file).replaceAll("");
+        file = file.replaceAll("\n", "").replaceAll("\r","").replaceAll("\\R","");
         logger.info("file provided:" + file);
         return ResponseEntity.ok(service.lanchLscsv(file));
     }
