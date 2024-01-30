@@ -23,14 +23,16 @@ public class LscsvBatchService {
 
     private final JobExplorer explorer;
     private final JobLauncher launcher;
-    private final Job job;
+    private final Job lscsvJob;
+    private final Job lsxlsJob;
 
     public LscsvBatchService(JobExplorer explorer,
             @Qualifier("lscsvJobLauncher") JobLauncher launcher,
-            @Qualifier("lscsvJob") Job job) {
+            @Qualifier("lscsvJob") Job lscsvJob, @Qualifier("lsxlsJob") Job lsxlsJob) {
         this.explorer = explorer;
         this.launcher = launcher;
-        this.job = job;
+        this.lscsvJob = lscsvJob;
+        this.lsxlsJob = lsxlsJob;
     }
 
     public JobInfo lanchLscsv(String file) {
@@ -39,7 +41,12 @@ public class LscsvBatchService {
                     .addJobParameter("file", file, String.class)
                     .addLocalDateTime("date", LocalDateTime.now())
                     .toJobParameters();
-            JobExecution execution = launcher.run(job, parameters);
+            JobExecution execution;
+            if (file.endsWith(".csv")) {
+                execution = launcher.run(lscsvJob, parameters);
+            } else {
+                execution = launcher.run(lsxlsJob, parameters);
+            }
             log.info("lscsv job execution status: {}, {}, {}", file, execution.getId(), execution.getExitStatus());
             return new JobInfo(execution);
         } catch (JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException

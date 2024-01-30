@@ -20,7 +20,7 @@ public class LscsvBatchController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LscsvBatchService.JobInfo> findLscv(
+    public ResponseEntity<LscsvBatchService.JobInfo> findLscsv(
             @PathVariable(name = "id") Long executionId) {
         LscsvBatchService.JobInfo info = service.findLscsvJob(executionId);
         if (info == null) {
@@ -30,19 +30,19 @@ public class LscsvBatchController {
     }
 
     @GetMapping("/launch")
-    public ResponseEntity<LscsvBatchService.JobInfo> launchLscv2(
+    public ResponseEntity<LscsvBatchService.JobInfo> launchLscsvTest(
             @RequestParam(name = "file") String file) {
         return ResponseEntity.ok(service.lanchLscsv(file));
     }
 
     @PostMapping
-    public ResponseEntity<LscsvBatchService.JobInfo> launchLscv(
+    public ResponseEntity<LscsvBatchService.JobInfo> launchLscsv(
             @RequestParam(name = "file") String file) {
         return ResponseEntity.ok(service.lanchLscsv(file));
     }
 
     @PostMapping("/dummy")
-    public ResponseEntity<LscsvBatchService.LscsvInfo> apiDummyLscv(@RequestBody LscsvBatchService.LscsvInfo info) {
+    public ResponseEntity<LscsvBatchService.LscsvInfo> apiDummyLscsv(@RequestBody LscsvBatchService.LscsvInfo info) {
         return ResponseEntity.ok(info);
     }
 }
