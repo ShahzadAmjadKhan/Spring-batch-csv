@@ -42,6 +42,7 @@ public class LscsvBatchService {
                     .addLocalDateTime("date", LocalDateTime.now())
                     .toJobParameters();
             JobExecution execution;
+            file = file.replaceAll("\n", "").replaceAll("\r","").replaceAll("\\R","");
             if (file.endsWith(".csv")) {
                 execution = launcher.run(lscsvJob, parameters);
             } else {
