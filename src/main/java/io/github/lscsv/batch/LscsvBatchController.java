@@ -18,7 +18,7 @@ public class LscsvBatchController {
 
     private final LscsvBatchService service;
 
-    private static final Pattern SANITIZER = Pattern.compile("[\\R]*"); 
+    private static final Pattern SANITIZER = Pattern.compile("[\\\\R]*"); 
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -39,7 +39,7 @@ public class LscsvBatchController {
     @GetMapping("/launch")
     public ResponseEntity<LscsvBatchService.JobInfo> launchLscsvTest(
             @RequestParam(name = "file") String file) {
-
+        Pattern.matches("[^\\R]*", source)
         file = SANITIZER.matcher(file).replaceAll("");
         logger.info("file provided:" + file);
         return ResponseEntity.ok(service.lanchLscsv(file));
