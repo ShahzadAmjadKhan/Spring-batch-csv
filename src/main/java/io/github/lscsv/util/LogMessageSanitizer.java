@@ -5,6 +5,10 @@ import java.util.regex.Pattern;
 public final class LogMessageSanitizer {
 
     private static final Pattern SANITIZER = Pattern.compile("[\r\n]");
+
+    public static String sanitizeNew(String value) {
+        return sanitize(value);
+    }
     
     public static String sanitize(String value) {
         return value == null ? "" : value.replaceAll("\n", "").
