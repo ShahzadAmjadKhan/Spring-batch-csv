@@ -1,5 +1,6 @@
 package io.github.lscsv.batch;
 
+import io.github.lscsv.util.LogMessageSanitizer;
 import java.time.LocalDateTime;
 
 import org.springframework.batch.core.Job;
@@ -42,7 +43,7 @@ public class LscsvBatchService {
                     .addLocalDateTime("date", LocalDateTime.now())
                     .toJobParameters();
             JobExecution execution;
-            file = file.replaceAll("\n", "").replaceAll("\r","").replaceAll("\\R","");
+            file =  LogMessageSanitizer.sanitize(file);
             if (file.endsWith(".csv")) {
                 execution = launcher.run(lscsvJob, parameters);
             } else {
