@@ -56,10 +56,10 @@ public class LscsvBatchController {
     public ResponseEntity<LscsvBatchService.JobInfo> launchLscsvTestLog(
             @RequestBody MultipartFile file, @RequestParam String search, @RequestParam String metaData) {
 
-        String fileName = LogMessageSanitizer.sanitize(file.getOriginalFilename());
-
         logger.info("Starting launch for file:{}, with search: {}, and metaData: {} ",
-                file.getOriginalFilename(), search, metaData );
+                LogMessageSanitizer.sanitize(file.getOriginalFilename()), 
+                LogMessageSanitizer.sanitize(search), 
+                LogMessageSanitizer.sanitize(metaData));
 
         return ResponseEntity.ok(service.lanchLscsv(file.getOriginalFilename()));
     }
