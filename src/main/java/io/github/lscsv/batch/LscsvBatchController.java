@@ -1,5 +1,6 @@
 package io.github.lscsv.batch;
 
+import io.github.lscsv.util.LogMessageSanitizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -35,8 +36,7 @@ public class LscsvBatchController {
     @GetMapping("/launch")
     public ResponseEntity<LscsvBatchService.JobInfo> launchLscsvTest(
             @RequestParam(name = "file") String file) {
-        file = file.replaceAll("\n", "").replaceAll("\r","").replaceAll("\\R","");
-        logger.info("file provided:" + file);
+        logger.info("file provided:" +  LogMessageSanitizer.sanitize(file));
         return ResponseEntity.ok(service.lanchLscsv(file));
     }
 
@@ -49,5 +49,17 @@ public class LscsvBatchController {
     @PostMapping("/dummy")
     public ResponseEntity<LscsvBatchService.LscsvInfo> apiDummyLscsv(@RequestBody LscsvBatchService.LscsvInfo info) {
         return ResponseEntity.ok(info);
+    }
+
+    @GetMapping("/launch-test")
+    public ResponseEntity<LscsvBatchService.JobInfo> launchLscsvTestLog(
+            @RequestBody MultipartFile file, @RequestParam String search, @RequestParam String metaData) {
+
+        String fileName = LogMessageSanitizer.sanitize(file.getOriginalFilename());
+
+        logger.info("Starting launch for file:{}, with search: {}, and metaData: {} ",
+                file.getOriginalFilename(), search, metaData );
+
+        return ResponseEntity.ok(service.lanchLscsv(file.getOriginalFilename()));
     }
 }
